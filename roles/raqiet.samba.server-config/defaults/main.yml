@@ -1,0 +1,11 @@
+---
+# defaults file for samba-install
+smbconfig:
+  dir:
+    path: /opt/sambashare
+    mode: '0777'
+  browsable: yes
+  read_only: no
+  comment: Samba via Ansible
+  share_name: sambashare
+smbusers: []

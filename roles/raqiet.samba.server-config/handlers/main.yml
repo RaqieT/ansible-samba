@@ -1,0 +1,6 @@
+---
+# handlers file for samba-install
+- name: restart samba
+  service:
+    name: smbd
+    state: restarted

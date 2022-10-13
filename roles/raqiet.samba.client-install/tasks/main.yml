@@ -1,0 +1,9 @@
+---
+# tasks file for samba-install-client
+- name: Install client
+  package:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - samba-client
+    - cifs-utils

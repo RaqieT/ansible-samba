@@ -1,0 +1,22 @@
+---
+# tasks file for samba-install
+- name: Create share dir
+  file:
+    path: "{{smbconfig.dir.path}}"
+    state: directory
+    mode: "{{smbconfig.dir.mode}}"
+- name: Change config file
+  template:
+    src: smb.conf.j2
+    dest: /etc/samba/smb.conf
+  notify: restart samba
+- name: Add samba users
+  user:
+    name: "{{ item.name }}"
+    state: present
+  with_items: "{{ smbusers }}"
+- name: Configure Samba users
+  shell: "printf '{{ item.password }}\n{{ item.password }}\n' | smbpasswd -a {{ item.name }}"
+  register: smbpasswd
+  changed_when: "'Added user' in smbpasswd.stdout"
+  with_items: "{{ smbusers }}"

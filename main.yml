@@ -1,0 +1,63 @@
+---
+- name: Install samba server
+  hosts: smbserver
+  become: yes
+  roles:
+  - geerlingguy.samba
+  tags:
+  - smb
+  - smb.install
+  - smb.install.server
+
+- name: Install samba client
+  hosts: smbclients
+  become: yes
+  roles:
+  - raqiet.samba.client-install
+  tags:
+  - smb
+  - smb.install
+  - smb.install.client
+
+- name: Set smbuser fact for every client
+  hosts: smbclients
+  tasks:
+  - set_fact:
+      smbuser:
+      - name: "{{smbclient_name | default (ansible_host)}}"
+        password: "{{smbclient_password}}"
+  tags:
+  - smb
+  - smb.configure
+  - smb.configure.server
+
+- name: Gather all smbuser facts from smbclients to smbserver
+  hosts: smbserver
+  tasks:
+  - set_fact:
+      smbusers: "{{ (smbusers | default ([])) + hostvars[item]['smbuser'] }}"
+    with_items: "{{ groups['smbclients'] }}"
+  tags:
+  - smb
+  - smb.configure
+  - smb.configure.server
+
+- name: Configure server
+  become: yes
+  hosts: smbserver
+  roles:
+  - raqiet.samba.server-config
+  tags:
+  - smb
+  - smb.configure
+  - smb.configure.server
+
+- name: Configure client
+  become: yes
+  hosts: smbclients
+  roles:
+  - raqiet.samba.client-config
+  tags:
+  - smb
+  - smb.configure
+  - smb.configure.client

@@ -1,0 +1,6 @@
+[smbclients]
+alma2.test.lab
+alma3.test.lab
+
+[smbserver]
+deb11.test.lab
