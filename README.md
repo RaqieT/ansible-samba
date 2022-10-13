@@ -1,8 +1,16 @@
 # Samba installation and configuration
-- installing samba server
-- installing samba client
-- configure samba server
-- connect clients to samba server [WIP]
+Usage:
+```
+ansible-playbook main.yml
+```
+## Features/Tasks
+- samba server installation on smbserver host
+- samba client installation on smbclients hosts
+- samba server configuration
+  - smb.conf preparation
+  - creating system users for smbclients
+  - creating smb users for smbclients
+- samba clients configuration [WIP]
 
 ## !WIP!
 Currently supported (and tested) samba server host is Debian 11.
