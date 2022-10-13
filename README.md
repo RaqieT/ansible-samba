@@ -3,6 +3,10 @@ Usage:
 ```
 ansible-playbook main.yml
 ```
+## !WIP!
+Currently supported (and tested) samba server host is Debian 11.  
+Currently supported (and tested) samba client host is AlmaLinux 8.
+
 ## Features/Tasks
 - samba server installation on smbserver host
 - samba client installation on smbclients hosts
@@ -12,6 +16,6 @@ ansible-playbook main.yml
   - creating smb users for smbclients
 - samba clients configuration [WIP]
 
-## !WIP!
-Currently supported (and tested) samba server host is Debian 11.  
-Currently supported (and tested) samba client host is AlmaLinux 8.
+
+## Dependencies
+[ansible-role-samba](https://github.com/geerlingguy/ansible-role-samba) - for server installation
